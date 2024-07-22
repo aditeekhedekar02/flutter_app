@@ -43,27 +43,25 @@ class _LoginPageState extends State<LoginPage> {
       var url = Uri.parse('https://project1.myospaz.in/aditee/login2.php');
       var response = await http.post(url, body: {
         "username": _usernameController.text,
-        //"password": _passwordController.text,  // Include password if needed
+        //"password": _passwordController.text,
       });
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
       var data = json.decode(response.body);
-
       if (data == "Success") {
-        // Save the username in Shared Preferences if needed
-        if (_rememberMe) {
-          await _saveUsername(_usernameController.text);
-        }
+        // Save the username in Shared Preferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('username', _usernameController.text);
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => BottomNavigationBarExample()),
+          MaterialPageRoute(builder: (context) =>BottomNavigationBarExample()),
         );
       } else {
         Fluttertoast.showToast(
-          msg: data, // Show the response message from the server
+          msg: 'Invalid Username or Password',
           backgroundColor: Colors.red,
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,

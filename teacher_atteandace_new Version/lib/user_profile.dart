@@ -105,26 +105,17 @@ class _UserProfileScreenState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: ClipRRect(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20.0),
-          ),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            title: Text("Profile"),
-            centerTitle: true,
-            backgroundColor: Color.fromARGB(255, 65, 172, 194),
-            actions: [
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Profile'),
+        backgroundColor: Color.fromARGB(255, 48, 198, 232),
+        actions: [
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: _showLogoutDialog,
           ),
         ],
-          ),
-        ),
-     ),
+      ),
       body: _profileData == null
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -179,10 +170,13 @@ class _UserProfileScreenState extends State<UserProfile> {
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.info),
-                      title: Text(_profileData!['is_active'].toString()),
+                      title: Text(
+                        _profileData!['is_active'] == 1 ? 'Active' : 'Inactive',
+                      ),
                       subtitle: Text('is_active'),
                     ),
                   ),
+
                   SizedBox(height: 20),
                 ],
               ),
